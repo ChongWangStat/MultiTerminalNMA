@@ -40,3 +40,9 @@ The psoriasis study-level file `pso-psa-data.csv` is **not redistributed** becau
 The numerical checks validate the algebra and stored illustrative examples. They do not validate trial-level clinical inference. Prior third-party published example inputs retain their original attribution. See `PROVENANCE.md`.
 
 Original software code is released under the **MIT License**; see [`LICENSE`](LICENSE) and [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md). Reused CSP code retains its original authorship and MIT notice (see [`CSP_LICENSE_NOTICE.md`](CSP_LICENSE_NOTICE.md)). Externally sourced data and publications are not relicensed, and the restricted psoriasis extraction is excluded.
+
+## Manuscript revision v19.7 (November 12, 2026)
+
+The manuscript now makes three distinct NMA contributions explicit: (1) a covariance-aware multi-terminal electrical representation and criterion for ordinary positive-resistor realization; (2) proofs of two conjectures stated by Davies (2026) for independent arms; (3) identification conditions and sharp bounds for study-labeled routes. It distinguishes arbitrary within-study pairing masses from the uniquely defined maximal direct component of the CSP method, and states that complete-route decompositions require an acyclic study-terminal flow graph.
+
+The five-study numerical illustration now uses anonymous study names **S1-S5** in its figures. Source CSVs retain their historical identifiers for exact numerical audit; no valid trial-specific clinical inference is claimed. The paired figure-rendering scripts in `brief/figures/` produce the revised labels. The supplementary counterexample is reproducible with `python3 brief/code/positive_resistor_cycle.py`; it demonstrates that study-terminal cycles can arise despite exclusively positive mesh conductances.
