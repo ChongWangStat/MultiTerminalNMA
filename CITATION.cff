@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: >-
+  Please cite the associated Research-in-Brief manuscript when using this repository.
+title: "MultiTerminalNMA: multi-terminal network meta-analysis reproducibility materials"
+authors:
+  - family-names: Wang
+    given-names: Chong
+  - family-names: Jin
+    given-names: Zhezhen
+  - family-names: "O'Connor"
+    given-names: Annette M.
+date-released: 2026-11-12

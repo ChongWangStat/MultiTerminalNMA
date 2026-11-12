@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.aux
+*.bbl
+*.log
+.DS_Store
+psoriasis/pso-psa-data.csv
+psoriasis/psoriasis_formatted_arm_data.csv
+psoriasis/reproduced/
+simulation/reproduced/
