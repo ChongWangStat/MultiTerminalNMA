@@ -1,0 +1,4 @@
+Four-arm terminal currents: [ 1.       -0.417025  0.417025 -1.      ]
+Two-arm terminal currents: [ 0.        0.417025 -0.417025  0.      ]
+Cycle: 2 -> two-arm study -> 3 -> four-arm study -> 2
+All pairwise resistor conductances are positive.
