@@ -1,8 +1,13 @@
 # MultiTerminalNMA — code and reproducibility materials
 
-Companion reproducibility archive for **Multi-terminal study resistances in network meta-analysis: correlated arms, two random-walk conjectures, and non-unique evidence routes** (Wang, Jin, O’Connor; *Research Synthesis Methods*, Research in Brief, manuscript).
+Companion reproducibility archive for **Multi-terminal study resistance and electrical evidence flow in network meta-analysis** (Wang, Jin, O’Connor; *Research Synthesis Methods*, Research in Brief, manuscript).
 
 This is a **methodological paper**, not a clinical treatment-effect evaluation. The trial-inspired five-study network is illustrative.
+
+## Multi-terminal resistance framework
+
+For a multi-arm study with a full-rank contrast matrix `C_k` and positive-definite covariance `Sigma_k` of its within-study contrasts, `Sigma_k` is a generalized resistance matrix in contrast coordinates. The corresponding terminal conductance is `K_k = C_k^T (Sigma_k)^(-1) C_k`. The electrical terminal law `i_k = K_k v_k` reproduces the fitted generalized least-squares coefficients. A study with correlated arms need not be realizable by ordinary positive resistors; the multi-terminal law still holds. The code is not a recommendation to allocate evidence by random walks.
+
 
 ## Contents
 
