@@ -39,4 +39,4 @@ The psoriasis study-level file `pso-psa-data.csv` is **not redistributed** becau
 
 The numerical checks validate the algebra and stored illustrative examples. They do not validate trial-level clinical inference. Prior third-party published example inputs retain their original attribution. See `PROVENANCE.md`.
 
-License for this companion package should be confirmed by all authors before announcing a reusable distribution license. Previously released CSP code included here retains its original copyright and license; see `CSP_LICENSE_NOTICE.md`.
+Original software code is released under the **MIT License**; see [`LICENSE`](LICENSE) and [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md). Reused CSP code retains its original authorship and MIT notice (see [`CSP_LICENSE_NOTICE.md`](CSP_LICENSE_NOTICE.md)). Externally sourced data and publications are not relicensed, and the restricted psoriasis extraction is excluded.
