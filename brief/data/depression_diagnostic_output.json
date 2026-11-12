@@ -1,0 +1,14 @@
+{
+ "fitted_NMA_common_effect_1v3_published_orientation": -0.11972490762288841,
+ "fitted_from_GLS_theta": 0.11972491135463714,
+ "theta_sub_shortest_path": -0.0350985456631858,
+ "theta_sub_random_walk": -0.032286825385302705,
+ "discrepancy_shortest": 0.0846263619597026,
+ "discrepancy_random_walk": 0.0874380822375857,
+ "sum_shares_shortest": 0.9999999999999986,
+ "sum_shares_random_walk": 0.9999999999999997,
+ "max_abs_diff_hat_row_vs_published_flow": 1.4380928559099004e-08,
+ "n_trials": 26,
+ "n_contrast_records": 47,
+ "n_direct_comparisons": 20
+}

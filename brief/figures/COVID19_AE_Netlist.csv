@@ -1,0 +1,12 @@
+study,from,to,current,component,resistance_formula
+REMAP-CAP,A,B,0.002432,two_arm_resistor,Var(y_AB_REMAPCAP)
+CoDEX,A,B,0.004368,two_arm_resistor,Var(y_AB_CoDEX)
+ACTT-1,A,E,0.140517,two_arm_resistor,Var(y_AE_ACTT1)
+RECOVERY,A,RECOVERY,0.213532,multi_terminal_port,s_RECOVERY_A
+RECOVERY,B,RECOVERY,0.006800,multi_terminal_port,s_RECOVERY_B
+RECOVERY,RECOVERY,C,0.095036,multi_terminal_port,s_RECOVERY_C
+RECOVERY,RECOVERY,D,0.125296,multi_terminal_port,s_RECOVERY_D
+SOLIDARITY,A,SOLIDARITY,0.639151,multi_terminal_port,s_SOLIDARITY_A
+SOLIDARITY,C,SOLIDARITY,0.095036,multi_terminal_port,s_SOLIDARITY_C
+SOLIDARITY,D,SOLIDARITY,0.125296,multi_terminal_port,s_SOLIDARITY_D
+SOLIDARITY,SOLIDARITY,E,0.859483,multi_terminal_port,s_SOLIDARITY_E

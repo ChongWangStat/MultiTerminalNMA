@@ -1,0 +1,3 @@
+model,tau2,total_targets,positive_indirect_targets,direct_only_targets,study_unique_positive,treatment_unique_positive,study_unique_all,treatment_unique_all,study_max_width,treatment_max_width,max_study_width_target,df_routes
+common,0.0,45,42,3,5,30,8,33,0.41811980841210566,0.19779923528150978,D:F,64
+random,0.0169610976463937,45,42,3,5,30,8,33,0.4038730297317618,0.18520429154476983,D:F,64

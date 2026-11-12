@@ -1,0 +1,7 @@
+model,target,event,lower,upper
+common,D:F,visits_Study_7,0.4181198084121058,0.4181198084121058
+common,D:F,visits_Study_10,0.5214763605507018,0.5214763605507018
+common,D:F,visits_both_Study_7_Study_10,0.0,0.41811980841210533
+random,D:F,visits_Study_7,0.40947933886825705,0.40947933886825705
+random,D:F,visits_Study_10,0.5036205638999807,0.5036205638999807
+random,D:F,visits_both_Study_7_Study_10,0.0,0.409479338868257

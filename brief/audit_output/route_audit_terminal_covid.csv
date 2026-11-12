@@ -1,0 +1,11 @@
+target,study_V,study_E,study_routes,study_dim,study_unique,trt_V,trt_E,trt_routes,trt_dim,trt_unique
+A:B,10,14,7,1,False,5,9,7,1,False
+A:C,10,14,7,1,False,5,9,6,0,True
+A:D,10,14,7,1,False,5,9,6,0,True
+A:E,10,14,8,2,False,5,9,7,1,False
+B:C,10,14,8,2,False,5,9,7,1,False
+B:D,10,14,8,2,False,5,9,7,1,False
+B:E,10,14,8,2,False,5,9,7,1,False
+C:D,10,14,8,2,False,5,9,7,1,False
+C:E,10,14,8,2,False,5,9,7,1,False
+D:E,10,14,8,2,False,5,9,7,1,False

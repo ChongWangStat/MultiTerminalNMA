@@ -1,0 +1,38 @@
+=== (a) Real example (Table 3): Batch7 A-Control, Batch9 B-Control, Batch10 (Control, B, C) correlated ===
+contrast variances of Batch10: {'BCtl': 0.028924, 'CCtl': 0.075047, 'BC': 0.045464}  triangle check V(C-Ctl) <= V(B-Ctl) + V(B-C): 0.075047 <= 0.074388 False
+implied arm variances (Control, B, C): [ 0.029253 -0.000329  0.045793]
+det Sigma = 0.001314893796173745  K (Control, B, C) =
+ [[ 34.576083 -34.826517   0.250434]
+ [-34.826517  57.074249 -22.247732]
+ [  0.250434 -22.247732  21.997298]]
+network variances: {'Control:A': 0.11, 'Control:B': 0.0184, 'Control:C': 0.0642, 'A:B': 0.1284, 'A:C': 0.1743, 'B:C': 0.0455}
+comparison B:C  potentials (sink = 0): {'Control': 0.04567, 'A': 0.04567, 'B': 0.04546, 'C': 0.0}
+    Batch7   terminal currents {'Control': 0.0, 'A': -0.0}
+    Batch9   terminal currents {'Control': 0.0042, 'B': -0.0042}
+    Batch10  terminal currents {'Control': -0.0042, 'B': 1.0042, 'C': -1.0}
+
+=== (b) Fictitious network (Table D1): four three-arm trials with correlated arms ===
+ABC implied arm variances [ 1.445 -0.445  1.445]  K = [[1.2469, -1.8018, 0.5549], [-1.8018, 3.6036, -1.8018], [0.5549, -1.8018, 1.2469]]
+ABD implied arm variances [-2.18  3.18 44.43]  K = [[1.2697, -1.1849, -0.0848], [-1.1849, 1.1267, 0.0581], [-0.0848, 0.0581, 0.0267]]
+ACD implied arm variances [ 1.445  1.445 40.805]  K = [[0.352, -0.34, -0.012], [-0.34, 0.352, -0.012], [-0.012, -0.012, 0.0241]]
+BCD implied arm variances [ 3.18 -2.18 44.43]  K = [[1.1267, -1.1849, 0.0581], [-1.1849, 1.2697, -0.0848], [0.0581, -0.0848, 0.0267]]
+published NMA variances (Table D1): A:B 0.364, A:C 0.754, B:C 0.364, A:D 13.502, B:D 14.019, C:D 13.502
+network variances: {'A:B': 0.3644, 'A:C': 0.7536, 'A:D': 13.5024, 'B:C': 0.3644, 'B:D': 14.0186, 'C:D': 13.5024}
+comparison B:D  potentials (sink = 0): {'A': 13.57831, 'B': 14.0186, 'C': 13.57831, 'D': 0.0}
+    ABC      terminal currents {'A': -0.7933, 'B': 1.5866, 'C': -0.7933}
+    ABD      terminal currents {'A': 0.6298, 'B': -0.2933, 'D': -0.3365}
+    ACD      terminal currents {'A': 0.1635, 'C': 0.1635, 'D': -0.327}
+    BCD      terminal currents {'B': -0.2933, 'C': 0.6298, 'D': -0.3365}
+comparison A:D  potentials (sink = 0): {'A': 13.50241, 'B': 13.57831, 'C': 13.12559, 'D': 0.0}
+    ABC      terminal currents {'A': -0.3458, 'B': 0.9525, 'C': -0.6066}
+    ABD      terminal currents {'A': 1.0551, 'B': -0.6995, 'D': -0.3557}
+    ACD      terminal currents {'A': 0.2907, 'C': 0.0299, 'D': -0.3206}
+    BCD      terminal currents {'B': -0.253, 'C': 0.5767, 'D': -0.3237}
+
+=== (c) Four terminals: every triangle inequality holds, yet one off-diagonal entry of K is positive ===
+eigenvalues of K: [-0.   1.9  4.   4. ]  K[1,2] = 0.05
+contrast variances (effective resistances): {'12': 1.0526, '13': 0.6382, '14': 0.6382, '23': 0.6382, '24': 0.6382, '34': 0.5}
+triangle violations: []
+
+=== (d) Redundant contrasts: all three pairwise contrasts with the pseudoinverse give the same K ===
+max |K_full - K| for Batch10: 2.1316282072803006e-14

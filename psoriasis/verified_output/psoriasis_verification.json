@@ -1,0 +1,62 @@
+{
+  "common": {
+    "nonredundant_gls_max_error": 1.2878587085651816e-14,
+    "reml_objective_offset": 5.493061443340553,
+    "endpoint_reconstruction_error": 8.881784197001252e-16,
+    "flow_balance_error": 1.096345236817342e-15,
+    "earlier_vs_supplied_endpoint_max_error": 5.551115123125783e-17,
+    "native_R_comparison": {
+      "P_max_error": 1.8457457784393227e-15,
+      "theta_max_error": 1.021405182655144e-14,
+      "edge_max_error": 7.771561172376096e-16
+    }
+  },
+  "random": {
+    "nonredundant_gls_max_error": 1.3322676295501878e-14,
+    "reml_objective_offset": 5.493061443340549,
+    "endpoint_reconstruction_error": 8.881784197001252e-16,
+    "flow_balance_error": 1.9532986339498848e-15,
+    "earlier_vs_supplied_endpoint_max_error": 9.992007221626409e-16,
+    "native_R_comparison": {
+      "P_max_error": 1.5543122344752192e-15,
+      "theta_max_error": 1.2656542480726785e-14,
+      "edge_max_error": 8.326672684688674e-16
+    }
+  },
+  "input_sha256": "56b3a2d4586c4f92b9ebdee9a24b3aa3ca15d35bec300269cc15cd5efad9738c",
+  "route_queries_checked": 3410,
+  "max_route_endpoint_error": 2.3314683517128287e-15,
+  "event_queries_checked": 6,
+  "event_query_selection": "Illustrative, selected using widest common-effect D:F route; no inferential coverage claim.",
+  "widest_DF_route": {
+    "model": "common",
+    "target": "D:F",
+    "level": "study",
+    "route_id": 54,
+    "treatment_route": "D->A->F",
+    "study_route": "Study_7 ||| Study_10",
+    "lower": 0.0,
+    "upper": 0.41811980841210566,
+    "width": 0.41811980841210566,
+    "indirect_mass": 1.0
+  },
+  "python_reml": {
+    "tau2": 0.016955022771662664,
+    "interior_optimum": 0.016955022771662664,
+    "objective": 1.8732517871817027,
+    "objective_at_zero": 2.223171727746344,
+    "upper_search_bound": 4.366952368082807,
+    "boundary_selected": false
+  },
+  "independent_basis_tau2": 0.016955023309414164,
+  "primary_tau2": 0.0169610976463937,
+  "native_R_reference_compared": true,
+  "target_reconciliation": "45 pairs; A:D, A:G and A:J have zero indirect flow; 42 positive-indirect targets reproduce all archived summary values.",
+  "direct_only_targets": [
+    "A:D",
+    "A:G",
+    "A:J"
+  ],
+  "support_classification_changes": 0,
+  "passed": true
+}
