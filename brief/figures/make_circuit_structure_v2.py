@@ -137,15 +137,15 @@ for t,p in recovery.items(): draw_wire(t,p)
 for t,p in solidarity.items(): draw_wire(t,p)
 # polygons
 rec_order={'A':recovery['A'],'D':recovery['D'],'C':recovery['C'],'B':recovery['B']}
-draw_polygon(rec_order,'RECOVERY',title_shift=0.54,resistor_shift=-0.20,title_size=10.1)
+draw_polygon(rec_order,'S1',title_shift=0.54,resistor_shift=-0.20,title_size=10.1)
 sol_order={'A':solidarity['A'],'E':solidarity['E'],'D':solidarity['D'],'C':solidarity['C']}
-draw_polygon(sol_order,'SOLIDARITY',title_shift=0.54,resistor_shift=-0.20,title_size=10.1)
+draw_polygon(sol_order,'S2',title_shift=0.54,resistor_shift=-0.20,title_size=10.1)
 # two-arm study elements with similar styling
 # move labels away enough and use element boxes instead of bare zigzag lines
 # CoDEX and REMAP-CAP between A and B; ACTT-1 between A and E
-draw_two_terminal_study('A','B',(4.0,6.05),(2.25,4.20),'CoDEX',(3.55,4.16),box_len=1.16)
-draw_two_terminal_study('A','B',(3.25,7.05),(1.00,5.25),'REMAP-CAP',(2.20,6.68),box_len=1.40)
-draw_two_terminal_study('A','E',(11.0,7.4),(13.9,6.0),'ACTT-1',(12.4,5.32),box_len=1.18)
+draw_two_terminal_study('A','B',(4.0,6.05),(2.25,4.20),'S4',(3.55,4.16),box_len=1.16)
+draw_two_terminal_study('A','B',(3.25,7.05),(1.00,5.25),'S5',(2.20,6.68),box_len=1.40)
+draw_two_terminal_study('A','E',(11.0,7.4),(13.9,6.0),'S3',(12.4,5.32),box_len=1.18)
 
 ax.text(8.0,9.6,'Illustrative five-study circuit before selecting a comparison',ha='center',va='center',fontsize=13,weight='bold',color=ink)
 ax.text(8.0,8.95,'Treatment nodes are connected by two-terminal resistive elements and multi-terminal study elements.',ha='center',fontsize=9.5,color=gray)
