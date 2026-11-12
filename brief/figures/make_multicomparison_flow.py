@@ -27,6 +27,7 @@ pos={
 recovery={'A':(4.8,4.2),'B':(2.95,2.4),'C':(4.8,0.6),'D':(6.65,2.4)}
 solidarity={'A':(10.2,4.2),'C':(8.35,2.4),'D':(10.2,0.6),'E':(12.05,2.4)}
 study_id_to_name={'S1':'RECOVERY','S2':'SOLIDARITY','S3':'ACTT-1','S4':'CoDEX','S5':'REMAP-CAP'}
+display_names={'RECOVERY':'S1','SOLIDARITY':'S2','ACTT-1':'S3','CoDEX':'S4','REMAP-CAP':'S5'}
 
 direct_specs={
     'CoDEX': {
@@ -208,7 +209,7 @@ def draw_direct_structure(ax,study):
     draw_wire(ax, geom['seg1'][0], geom['seg1'][-1], lw=0)  # no-op to satisfy linter-like style
     ax.plot([z[0] for z in geom['seg1']],[z[1] for z in geom['seg1']],color=ink,lw=1.35,zorder=2)
     ax.plot([z[0] for z in geom['seg2']],[z[1] for z in geom['seg2']],color=ink,lw=1.35,zorder=2)
-    ax.text(spec['label'][0],spec['label'][1],study,ha='center',va='center',fontsize=9,color=gray,
+    ax.text(spec['label'][0],spec['label'][1],display_names[study],ha='center',va='center',fontsize=9,color=gray,
             bbox=dict(facecolor='white',edgecolor='none',boxstyle='round,pad=0.22',alpha=0.98),zorder=8)
     return geom
 
@@ -365,7 +366,162 @@ def draw_panel(ax,target,source,sink):
     # fixed study elements
     rec_order={'A':recovery['A'],'D':recovery['D'],'C':recovery['C'],'B':recovery['B']}
     sol_order={'A':solidarity['A'],'E':solidarity['E'],'D':solidarity['D'],'C':solidarity['C']}
-    draw_polygon(ax,rec_order,'RECOVERY',r'$\Sigma_R^{-1}$',label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    draw_polygon(ax,rec_order,'S1',r'$\Sigma_1^{-1},label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    draw_polygon(ax,sol_order,'S2',r'$\Sigma_2^{-1},label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    geom_direct={study:draw_direct_structure(ax,study) for study in ['REMAP-CAP','CoDEX','ACTT-1']}
+
+    # changing arrows and values only
+    draw_multiterminal_arrows(ax,target,'RECOVERY',recovery)
+    draw_multiterminal_arrows(ax,target,'SOLIDARITY',solidarity)
+    for study in ['REMAP-CAP','CoDEX','ACTT-1']:
+        draw_direct_arrows(ax,target,study,geom_direct[study])
+
+    # treatment nodes on top
+    for k in ['A','B','C','D','E']:
+        add_node(ax,k)
+
+    draw_source_sink(ax,source,sink)
+
+
+# ------------------------------- key panel ----------------------------
+def draw_key(ax):
+    ax.set_axis_off(); ax.set_xlim(*XLIM); ax.set_ylim(*YLIM)
+    ax.text(7.5,9.30,'How to read the panels',ha='center',va='center',fontsize=11.5,weight='bold',color=ink)
+    y=7.95
+    for study in ['RECOVERY','SOLIDARITY','ACTT-1','CoDEX','REMAP-CAP']:
+        arrow_on_segment(ax,(0.2,y),(2.6,y),study_colors[study],3.2,z=7)
+        ax.text(3.0,y,display_names[study],ha='left',va='center',fontsize=10.5,color=study_colors[study],weight='bold')
+        y-=0.95
+    ax.text(8.6,7.95,'Arrow direction: sign of the\nstudy-terminal current',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,6.15,'Arrow width and number:\nits magnitude',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,4.35,'+1 / \u22121: unit current injected\nat the source, extracted at the sink',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # opaque multi-terminal element
+    demo={'A':(2.0,2.1),'D':(3.4,0.8),'C':(2.0,-0.5),'B':(0.6,0.8)}
+    draw_polygon(ax,demo,'',r'$\Sigma_k^{-1}$',label_y=0.18,title_shift=0.5,resistor_shift=0.42,title_size=1,sigma_size=12)
+    ax.text(4.3,0.8,'Multi-arm study: opaque element;\ncorners are its treatment terminals;\nno internal pairing is drawn',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # two-arm resistor
+    l,r=draw_rotated_box_with_terminals(ax,(2.0,-1.9),1.0,0.0,length=1.30,height=0.50,terminal_r=0.11)
+    ax.plot([0.2,l[0]-0.11],[-1.9,-1.9],color=ink,lw=1.35,zorder=2); ax.plot([r[0]+0.11,3.8],[-1.9,-1.9],color=ink,lw=1.35,zorder=2)
+    ax.text(4.3,-1.9,'Two-arm study: resistor',ha='left',va='center',fontsize=9.8,color=ink)
+
+
+fig=plt.figure(figsize=(10.2,8.2))
+gs=fig.add_gridspec(2,2,wspace=0.02,hspace=0.04)
+cells=[gs[0,0],gs[0,1],gs[1,0],gs[1,1]]
+for cell,(target,src,snk) in zip(cells[:3],[('A:B','A','B'),('A:E','A','E'),('B:E','B','E')]):
+    ax=fig.add_subplot(cell); draw_panel(ax,target,src,snk); ax.set_aspect('equal')
+axk=fig.add_subplot(cells[3]); draw_key(axk); axk.set_aspect('equal')
+fig.suptitle('Comparison-specific currents on the same fixed study-element circuit',fontsize=14,weight='bold',color=ink,y=0.985)
+fig.subplots_adjust(left=0.01,right=0.99,bottom=0.01,top=0.95)
+out_pdf=root/'COVID19_MultiTerminal_MultiComparison.pdf'
+out_png=root/'COVID19_MultiTerminal_MultiComparison.png'
+fig.savefig(out_pdf,bbox_inches='tight')
+fig.savefig(out_png,dpi=220,bbox_inches='tight')
+print(out_pdf)
+,label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    draw_polygon(ax,sol_order,'SOLIDARITY',r'$\Sigma_S^{-1}$',label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    geom_direct={study:draw_direct_structure(ax,study) for study in ['REMAP-CAP','CoDEX','ACTT-1']}
+
+    # changing arrows and values only
+    draw_multiterminal_arrows(ax,target,'RECOVERY',recovery)
+    draw_multiterminal_arrows(ax,target,'SOLIDARITY',solidarity)
+    for study in ['REMAP-CAP','CoDEX','ACTT-1']:
+        draw_direct_arrows(ax,target,study,geom_direct[study])
+
+    # treatment nodes on top
+    for k in ['A','B','C','D','E']:
+        add_node(ax,k)
+
+    draw_source_sink(ax,source,sink)
+
+
+# ------------------------------- key panel ----------------------------
+def draw_key(ax):
+    ax.set_axis_off(); ax.set_xlim(*XLIM); ax.set_ylim(*YLIM)
+    ax.text(7.5,9.30,'How to read the panels',ha='center',va='center',fontsize=11.5,weight='bold',color=ink)
+    y=7.95
+    for study in ['RECOVERY','SOLIDARITY','ACTT-1','CoDEX','REMAP-CAP']:
+        arrow_on_segment(ax,(0.2,y),(2.6,y),study_colors[study],3.2,z=7)
+        ax.text(3.0,y,study,ha='left',va='center',fontsize=10.5,color=study_colors[study],weight='bold')
+        y-=0.95
+    ax.text(8.6,7.95,'Arrow direction: sign of the\nstudy-terminal current',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,6.15,'Arrow width and number:\nits magnitude',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,4.35,'+1 / \u22121: unit current injected\nat the source, extracted at the sink',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # opaque multi-terminal element
+    demo={'A':(2.0,2.1),'D':(3.4,0.8),'C':(2.0,-0.5),'B':(0.6,0.8)}
+    draw_polygon(ax,demo,'',r'$\Sigma_k^{-1}$',label_y=0.18,title_shift=0.5,resistor_shift=0.42,title_size=1,sigma_size=12)
+    ax.text(4.3,0.8,'Multi-arm study: opaque element;\ncorners are its treatment terminals;\nno internal pairing is drawn',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # two-arm resistor
+    l,r=draw_rotated_box_with_terminals(ax,(2.0,-1.9),1.0,0.0,length=1.30,height=0.50,terminal_r=0.11)
+    ax.plot([0.2,l[0]-0.11],[-1.9,-1.9],color=ink,lw=1.35,zorder=2); ax.plot([r[0]+0.11,3.8],[-1.9,-1.9],color=ink,lw=1.35,zorder=2)
+    ax.text(4.3,-1.9,'Two-arm study: resistor',ha='left',va='center',fontsize=9.8,color=ink)
+
+
+fig=plt.figure(figsize=(10.2,8.2))
+gs=fig.add_gridspec(2,2,wspace=0.02,hspace=0.04)
+cells=[gs[0,0],gs[0,1],gs[1,0],gs[1,1]]
+for cell,(target,src,snk) in zip(cells[:3],[('A:B','A','B'),('A:E','A','E'),('B:E','B','E')]):
+    ax=fig.add_subplot(cell); draw_panel(ax,target,src,snk); ax.set_aspect('equal')
+axk=fig.add_subplot(cells[3]); draw_key(axk); axk.set_aspect('equal')
+fig.suptitle('Comparison-specific currents on the same fixed study-element circuit',fontsize=14,weight='bold',color=ink,y=0.985)
+fig.subplots_adjust(left=0.01,right=0.99,bottom=0.01,top=0.95)
+out_pdf=root/'COVID19_MultiTerminal_MultiComparison.pdf'
+out_png=root/'COVID19_MultiTerminal_MultiComparison.png'
+fig.savefig(out_pdf,bbox_inches='tight')
+fig.savefig(out_png,dpi=220,bbox_inches='tight')
+print(out_pdf)
+,label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
+    geom_direct={study:draw_direct_structure(ax,study) for study in ['REMAP-CAP','CoDEX','ACTT-1']}
+
+    # changing arrows and values only
+    draw_multiterminal_arrows(ax,target,'RECOVERY',recovery)
+    draw_multiterminal_arrows(ax,target,'SOLIDARITY',solidarity)
+    for study in ['REMAP-CAP','CoDEX','ACTT-1']:
+        draw_direct_arrows(ax,target,study,geom_direct[study])
+
+    # treatment nodes on top
+    for k in ['A','B','C','D','E']:
+        add_node(ax,k)
+
+    draw_source_sink(ax,source,sink)
+
+
+# ------------------------------- key panel ----------------------------
+def draw_key(ax):
+    ax.set_axis_off(); ax.set_xlim(*XLIM); ax.set_ylim(*YLIM)
+    ax.text(7.5,9.30,'How to read the panels',ha='center',va='center',fontsize=11.5,weight='bold',color=ink)
+    y=7.95
+    for study in ['RECOVERY','SOLIDARITY','ACTT-1','CoDEX','REMAP-CAP']:
+        arrow_on_segment(ax,(0.2,y),(2.6,y),study_colors[study],3.2,z=7)
+        ax.text(3.0,y,study,ha='left',va='center',fontsize=10.5,color=study_colors[study],weight='bold')
+        y-=0.95
+    ax.text(8.6,7.95,'Arrow direction: sign of the\nstudy-terminal current',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,6.15,'Arrow width and number:\nits magnitude',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    ax.text(8.6,4.35,'+1 / \u22121: unit current injected\nat the source, extracted at the sink',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # opaque multi-terminal element
+    demo={'A':(2.0,2.1),'D':(3.4,0.8),'C':(2.0,-0.5),'B':(0.6,0.8)}
+    draw_polygon(ax,demo,'',r'$\Sigma_k^{-1}$',label_y=0.18,title_shift=0.5,resistor_shift=0.42,title_size=1,sigma_size=12)
+    ax.text(4.3,0.8,'Multi-arm study: opaque element;\ncorners are its treatment terminals;\nno internal pairing is drawn',ha='left',va='center',fontsize=9.8,color=ink,linespacing=1.25)
+    # two-arm resistor
+    l,r=draw_rotated_box_with_terminals(ax,(2.0,-1.9),1.0,0.0,length=1.30,height=0.50,terminal_r=0.11)
+    ax.plot([0.2,l[0]-0.11],[-1.9,-1.9],color=ink,lw=1.35,zorder=2); ax.plot([r[0]+0.11,3.8],[-1.9,-1.9],color=ink,lw=1.35,zorder=2)
+    ax.text(4.3,-1.9,'Two-arm study: resistor',ha='left',va='center',fontsize=9.8,color=ink)
+
+
+fig=plt.figure(figsize=(10.2,8.2))
+gs=fig.add_gridspec(2,2,wspace=0.02,hspace=0.04)
+cells=[gs[0,0],gs[0,1],gs[1,0],gs[1,1]]
+for cell,(target,src,snk) in zip(cells[:3],[('A:B','A','B'),('A:E','A','E'),('B:E','B','E')]):
+    ax=fig.add_subplot(cell); draw_panel(ax,target,src,snk); ax.set_aspect('equal')
+axk=fig.add_subplot(cells[3]); draw_key(axk); axk.set_aspect('equal')
+fig.suptitle('Comparison-specific currents on the same fixed study-element circuit',fontsize=14,weight='bold',color=ink,y=0.985)
+fig.subplots_adjust(left=0.01,right=0.99,bottom=0.01,top=0.95)
+out_pdf=root/'COVID19_MultiTerminal_MultiComparison.pdf'
+out_png=root/'COVID19_MultiTerminal_MultiComparison.png'
+fig.savefig(out_pdf,bbox_inches='tight')
+fig.savefig(out_png,dpi=220,bbox_inches='tight')
+print(out_pdf)
+,label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
     draw_polygon(ax,sol_order,'SOLIDARITY',r'$\Sigma_S^{-1}$',label_y=1.55,title_shift=0.52,resistor_shift=-0.04,title_size=7.5,sigma_size=12)
     geom_direct={study:draw_direct_structure(ax,study) for study in ['REMAP-CAP','CoDEX','ACTT-1']}
 
