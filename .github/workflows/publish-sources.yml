@@ -1,0 +1,44 @@
+name: Publish verified reproducibility sources
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-sources.yml'
+      - 'reproducibility/MultiTerminalNMA_public_reproduction_code.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify and extract package
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import hashlib
+          p=Path('reproducibility/MultiTerminalNMA_public_reproduction_code.zip')
+          expected='acb50a5e385a5b751d95fa0d0a0305f79335d649f86afa8c12a271d177db7685'
+          assert hashlib.sha256(p.read_bytes()).hexdigest()==expected, 'Archive checksum mismatch'
+          with ZipFile(p) as z:
+              names=z.namelist()
+              assert len(names)>=60
+              for n in names:
+                  dest=Path(n)
+                  assert not dest.is_absolute() and '..' not in dest.parts, 'Unsafe path'
+                  assert 'pso-psa-data.csv' not in n, 'Restricted data present'
+              z.extractall('.')
+          print('Extracted',len(names),'verified source files')
+          PY
+      - name: Commit extracted reproducibility files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md REPRODUCIBILITY.md PROVENANCE.md CSP_LICENSE_NOTICE.md .gitignore CITATION.cff requirements.txt brief/ psoriasis/ simulation/ SHA256SUMS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish verified reproducibility scripts and outputs [skip ci]"
+            git push
+          fi
